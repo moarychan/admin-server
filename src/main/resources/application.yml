@@ -1,0 +1,42 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /admin
+
+spring:
+#  boot:
+#    admin:
+#      context-path: /admin
+#      discovery:
+#        converter:
+#          management-context-path: /mgmt/actuator
+  application:
+    name: admin-server
+  cloud:
+    config:
+      # Allow the microservices to override the remote properties with their own System properties or config file
+      allow-override: true
+      # Override configuration with any local property source
+      override-none: true
+    azure:
+      active-directory:
+        enabled: true
+        credential:
+          client-id: xxx
+          client-secret: xxx
+        profile:
+          tenant-id: xxx
+        post-logout-redirect-uri: http://localhost:9090/admin/login # enable when configuring server.servlet.context-path
+#        post-logout-redirect-uri: http://localhost:9090/login # enable when configuring spring.boot.admin.context-path
+
+management:
+#  # AADSTS50011: redirect URI 'http://localhost:8088/mgmt/login/oauth2/code/' specified in the request
+#  # does not match the redirect URIs configured for the application
+#  server:
+#    base-path: /mgmt
+#    port: 8088
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+debug: on
